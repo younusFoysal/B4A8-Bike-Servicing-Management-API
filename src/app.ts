@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import httpStatus from "http-status";
+import router from "./app/routes";
 
 
 const app = express();
@@ -15,6 +16,7 @@ app.get("/", (req: Request, res: Response) => {
     });
 });
 
+app.use("/api", router);
 
 
 app.use((req: Request, res: Response) => {
