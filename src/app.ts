@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import httpStatus from "http-status";
 import router from "./app/routes";
+import GlobalErrorHandler from "./app/Errors/GlobalErrorHandler";
+import ApiError from "./app/Errors/ApiError";
 
 
 const app = express();
@@ -19,16 +21,14 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api", router);
 
 
-app.use((req: Request, res: Response) => {
-    res.status(httpStatus.NOT_FOUND).json({
-        success: false,
-        message: "Not Found",
-        errorMessages: [
-            {
-                path: req.originalUrl,
-                message: "API Not Found",
-            },
-        ],
-    });
+
+// 404 handler
+app.use((req: Request, res: Response, next) => {
+    next(new ApiError(httpStatus.NOT_FOUND, `API Not Found: ${req.originalUrl}`));
 });
+
+// Global error handler
+app.use(GlobalErrorHandler);
+
+
 export default app;

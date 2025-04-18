@@ -7,11 +7,21 @@ const createServiceService = async (payload: Service) => {
     const result = await prisma.service.create({
         data: payload,
     });
+
+    if (!result) {
+        throw new Error("Failed to create service");
+    }
+
     return result;
 };
 
 const getAllServicesService = async () => {
     const result = await prisma.service.findMany();
+
+    if (!result) {
+        throw new Error("Failed to fetch services");
+    }
+
     return result;
 };
 
@@ -21,6 +31,11 @@ const getSingleServiceService = async (id: string) => {
             serviceId: id,
         },
     });
+
+    if (!result) {
+        throw new Error("Service not found");
+    }
+
     return result;
 };
 
@@ -37,6 +52,11 @@ const updateServiceService = async (id: string, payload: Partial<Service>) => {
             // ...payload,
         }
     });
+
+    if (!result) {
+        throw new Error("Failed to update service");
+    }
+
     return result;
 };
 

@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-const SendResponse=<T>(res:Response,jsondata:{
+const SendResponse = <T>(res: Response, jsondata: {
     statusCode: number,
     success: boolean,
     message: string,
@@ -10,12 +10,13 @@ const SendResponse=<T>(res:Response,jsondata:{
         total: number
     },
     data?: T | null | undefined
-} )=>{
+}) => {
     res.status(jsondata.statusCode).json({
-        success:jsondata.success,
-        message:jsondata.message,
-        meta:jsondata.meta || null || undefined,
-        data:jsondata.data || null || undefined
+        success: jsondata.success,
+        status: jsondata.statusCode,
+        message: jsondata.message,
+        meta: jsondata.meta || undefined,
+        data: jsondata.data || undefined
     })
 }
 
