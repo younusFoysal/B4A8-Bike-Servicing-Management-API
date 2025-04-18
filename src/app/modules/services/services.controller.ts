@@ -46,6 +46,20 @@ const updateService = CatchAsync(async (req, res) => {
     });
 })
 
+const getPendingOrOverdueServices = CatchAsync(async (req, res) => {
+    console.log("called")
+
+    const result = await ServiceService.getPendingOrOverdueServicesService();
+    console.log(result)
+
+    SendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Pending or overdue services fetched successfully",
+        data: result,
+    });
+});
+
 
 
 export const ServiceController = {
@@ -53,4 +67,5 @@ export const ServiceController = {
     getAllServices,
     getSingleService,
     updateService,
+    getPendingOrOverdueServices
 };

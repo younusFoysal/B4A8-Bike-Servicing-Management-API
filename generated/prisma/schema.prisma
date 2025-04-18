@@ -46,5 +46,6 @@ model Service {
 
 enum Status {
   pending
+  inProgress
   done
 }

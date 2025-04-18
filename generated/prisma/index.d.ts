@@ -35,6 +35,7 @@ export type Service = $Result.DefaultSelection<Prisma.$ServicePayload>
 export namespace $Enums {
   export const Status: {
   pending: 'pending',
+  inProgress: 'inProgress',
   done: 'done'
 };
 

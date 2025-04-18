@@ -61,9 +61,46 @@ const updateServiceService = async (id: string, payload: Partial<Service>) => {
 };
 
 
+const getPendingOrOverdueServicesService = async () => {
+
+    console.log("Fetching pending or overdue services...");
+
+    const currentDate = new Date();
+    // Calculate date 7 days ago
+    const sevenDaysAgo = new Date(currentDate);
+    sevenDaysAgo.setDate(currentDate.getDate() - 7);
+
+    const pendingOrOverdueServices = await prisma.service.findMany({
+        where: {
+            AND: [
+                {
+                    OR: [
+                        { status: "pending" },
+                        { status: "inProgress" }
+                    ]
+                },
+                {
+                    serviceDate: {
+                        lt: sevenDaysAgo
+                    }
+                }
+            ]
+        },
+    });
+
+    if (!pendingOrOverdueServices) {
+        throw new Error("Failed to fetch pending or overdue services");
+    }
+
+    return pendingOrOverdueServices;
+};
+
+
+
 export const ServiceService = {
     createServiceService,
     getAllServicesService,
     getSingleServiceService,
     updateServiceService,
+    getPendingOrOverdueServicesService
 };

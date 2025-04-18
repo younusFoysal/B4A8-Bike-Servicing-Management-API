@@ -159,6 +159,7 @@ exports.Prisma.NullsOrder = {
 };
 exports.Status = exports.$Enums.Status = {
   pending: 'pending',
+  inProgress: 'inProgress',
   done: 'done'
 };
 
