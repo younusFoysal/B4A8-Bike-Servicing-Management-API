@@ -19,6 +19,10 @@ const createCustomerService = async (payload: Customer) => {
 const getAllCustomersService = async () => {
     const result = await prisma.customer.findMany();
 
+    if (result.length === 0) {
+        throw new ApiError(400, "No customers found");
+    }
+
     if (!result) {
         throw new ApiError(400, "Failed to fetch customers");
     }

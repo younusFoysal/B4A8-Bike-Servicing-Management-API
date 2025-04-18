@@ -1,4 +1,5 @@
 import { Bike, PrismaClient } from "../../../../generated/prisma";
+import ApiError from "../../Errors/ApiError";
 
 const prisma = new PrismaClient();
 
@@ -8,7 +9,7 @@ const createBikeService = async (payload: Bike) => {
     });
 
     if (!result) {
-        throw new Error("Failed to create bike");
+        throw new ApiError(404,"Failed to create bike");
     }
 
     return result;
@@ -18,7 +19,7 @@ const getAllBikesService = async () => {
     const result = await prisma.bike.findMany();
 
     if (!result) {
-        throw new Error("Failed to fetch bikes");
+        throw new ApiError(404,"Failed to fetch bikes");
     }
 
     return result;
@@ -32,7 +33,7 @@ const getSingleBikeService = async (id: string) => {
     });
 
     if (!result) {
-        throw new Error("Bike not found");
+        throw new ApiError(404,"Bike not found");
     }
 
     return result;

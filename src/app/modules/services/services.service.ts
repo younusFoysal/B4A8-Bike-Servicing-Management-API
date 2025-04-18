@@ -1,4 +1,5 @@
 import { Service, PrismaClient } from "../../../../generated/prisma";
+import ApiError from "../../Errors/ApiError";
 
 
 const prisma = new PrismaClient();
@@ -9,7 +10,7 @@ const createServiceService = async (payload: Service) => {
     });
 
     if (!result) {
-        throw new Error("Failed to create service");
+        throw new ApiError(404,"Failed to create service");
     }
 
     return result;
@@ -19,7 +20,7 @@ const getAllServicesService = async () => {
     const result = await prisma.service.findMany();
 
     if (!result) {
-        throw new Error("Failed to fetch services");
+        throw new ApiError(404,"Failed to fetch services");
     }
 
     return result;
@@ -33,7 +34,7 @@ const getSingleServiceService = async (id: string) => {
     });
 
     if (!result) {
-        throw new Error("Service not found");
+        throw new ApiError(404,"Service not found");
     }
 
     return result;
@@ -54,7 +55,7 @@ const updateServiceService = async (id: string, payload: Partial<Service>) => {
     });
 
     if (!result) {
-        throw new Error("Failed to update service");
+        throw new ApiError(404,"Failed to update service");
     }
 
     return result;
@@ -89,7 +90,7 @@ const getPendingOrOverdueServicesService = async () => {
     });
 
     if (!pendingOrOverdueServices) {
-        throw new Error("Failed to fetch pending or overdue services");
+        throw new ApiError(404,"Failed to fetch pending or overdue services");
     }
 
     return pendingOrOverdueServices;
