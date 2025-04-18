@@ -3,13 +3,53 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
-}
+//
+// generator client {
+//   provider = "prisma-client-js"
+//   output   = "../generated/prisma"
+// }
+//
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Customer {
+  customerId String   @id @default(uuid())
+  name       String
+  email      String
+  phone      String
+  createdAt  DateTime @default(now())
+  bikes      Bike[]
+}
+
+model Bike {
+  bikeId     String    @id @default(uuid())
+  brand      String
+  model      String
+  year       Int
+  createdAt  DateTime  @default(now())
+  customer   Customer  @relation(fields: [customerId], references: [customerId])
+  customerId String
+  Service    Service[]
+}
+
+model Service {
+  serviceId      String    @id @default(uuid())
+  bikeId         String
+  description    String
+  serviceDate    DateTime  @default(now())
+  completionDate DateTime?
+  status         Status    @default(pending)
+  bike           Bike      @relation(fields: [bikeId], references: [bikeId])
+}
+
+enum Status {
+  pending
+  done
 }
