@@ -1,4 +1,5 @@
 import express from "express";
+import {CustomerRoutes} from "../modules/customers/customer.route";
 
 
 const router = express.Router();
@@ -6,7 +7,7 @@ const router = express.Router();
 const moduleRoutes = [
     {
         path: "/customers",
-        route: customerRoutes,
+        route: CustomerRoutes,
     },
 ];
 
